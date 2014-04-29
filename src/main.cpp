@@ -2,10 +2,12 @@
 //#include <sqlite3.h>
 
 #include "Server.hpp"
+#include "db/Database.hpp"
 //using namespace std;
 
 int main( int argc, char* argv[] ){
-
+	Database db( "test.sqlite" );
+	
 	return Server().run( argc, argv );
 	/*
 	sqlite3 *db;

@@ -16,9 +16,25 @@
 
 #include "HomePage.hpp"
 
+#include "../db/Database.hpp"
+#include "../db/Channel.hpp"
+
 using namespace std;
 
 string HomePage::serve( vector<string> args, vector<header> &headers ) const{
-	return "<html><head><title>test</title><head><body><p>test</p></body></html>";
+	Database db( "test.sqlite" );
+	Statement stmt = Channel::all( db );
+	
+	string html_begin = "<html><head><title>test</title><head><body>";
+	string html_end = "</body></html>";
+	
+	string content;
+	while( stmt.next() ){
+		Channel ch;
+		ch.load( stmt );
+		content += "<p>" + ch.title + "</p>";
+	}
+	
+	return html_begin + content + html_end;
 }
 
