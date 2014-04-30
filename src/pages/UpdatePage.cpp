@@ -28,6 +28,7 @@ using namespace pugi;
 string UpdatePage::serve( vector<string> args, vector<header> &headers ) const{
 	Database db( "test.sqlite" ); //TODO: no manual connection here!
 	Statement stmt = Channel::all( db );
+	auto stmt_save = ChannelItem::saveAll( db );
 	
 	while( stmt.next() ){
 		Channel ch;
@@ -40,10 +41,8 @@ string UpdatePage::serve( vector<string> args, vector<header> &headers ) const{
 		Rss rss( doc );
 		
 		//Insert all rows into DB
-		for( auto item : rss.items ){
-			ChannelItem ch_item( ch.name, item );
-			ch_item.save( db );
-		}
+		for( auto item : rss.items )
+			ChannelItem( ch.name, item ).save( stmt_save );
 	}
 	
 	return "Updated!";

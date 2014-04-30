@@ -33,6 +33,7 @@ class Statement{
 		~Statement();
 		
 		bool next();
+		bool reset();
 		
 		std::string text( unsigned column );
 		int integer( unsigned column );
@@ -41,6 +42,7 @@ class Statement{
 		void bind( std::string value, unsigned column );
 		void bind( int value, unsigned column );
 		void bind( double value, unsigned column );
+		
 };
 
 #endif

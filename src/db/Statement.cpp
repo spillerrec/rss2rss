@@ -34,6 +34,9 @@ Statement::~Statement(){ /*sqlite3_finalize( stmt );*/ } //TODO: use shared_ptr
 bool Statement::next(){
 	return sqlite3_step( stmt ) != SQLITE_DONE;
 }
+bool Statement::reset(){
+	return sqlite3_reset( stmt ) == SQLITE_OK;
+}
 
 string Statement::text( unsigned column ){
 	return string( (const char*)sqlite3_column_text( stmt, column ) );

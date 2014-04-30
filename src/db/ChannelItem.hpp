@@ -49,12 +49,22 @@ class ChannelItem: public Record{
 			,	 media_thumb_url( item.media_thumbnail.url.value )
 			,	 media_content_url( item.media_content.url.value )
 			{ }
+		
+		
+		struct ItemStatement{
+			Statement load;
+			Statement save;
+			ItemStatement( Database &db, const char* q1, const char* q2 )
+				:	load( db, q1 ), save( db, q2 ) { }
+		};
 		void load( Statement& stmt );
-		void save( Database &db );
+		void save( ItemStatement &stmt );
 		
 		static Statement all( Database &db ){
 			return Statement( db, "SELECT * FROM item" );
 		}
+		
+		static ItemStatement saveAll( Database &db );
 };
 
 #endif

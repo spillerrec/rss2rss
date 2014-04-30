@@ -30,18 +30,33 @@ void ChannelItem::load( Statement& stmt ){
 	channel = stmt.text( 10 );
 }
 
-void ChannelItem::save( Database &db ){
-	Statement stmt( db, "INSERT INTO item VALUES( ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11 )" );
-	stmt.bind( title, 1 );
-	stmt.bind( link, 2 );
-	stmt.bind( description, 3 );
-	stmt.bind( author, 4 );
-	stmt.bind( category, 5 );
-	stmt.bind( guid, 6 );
-	stmt.bind( pubDate, 7 );
-	stmt.bind( source, 8 );
-	stmt.bind( media_thumb_url, 9 );
-	stmt.bind( media_content_url, 10 );
-	stmt.bind( channel, 11 );
-	stmt.next();
+ChannelItem::ItemStatement ChannelItem::saveAll( Database &db ){
+	return ItemStatement( db
+		,	"SELECT * FROM item WHERE guid = ?1"
+		,	"INSERT INTO item VALUES( ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11 )"
+		);
+}
+
+void ChannelItem::save( ChannelItem::ItemStatement &stmt ){
+	stmt.load.reset();
+	stmt.load.bind( guid, 1 );
+	if( stmt.load.next() ){
+		//TODO: do a better check, as guid might be unavailable IIRC
+		//TODO: update contents if different
+		return;
+	}
+	
+	stmt.save.reset();
+	stmt.save.bind( title, 1 );
+	stmt.save.bind( link, 2 );
+	stmt.save.bind( description, 3 );
+	stmt.save.bind( author, 4 );
+	stmt.save.bind( category, 5 );
+	stmt.save.bind( guid, 6 );
+	stmt.save.bind( pubDate, 7 );
+	stmt.save.bind( source, 8 );
+	stmt.save.bind( media_thumb_url, 9 );
+	stmt.save.bind( media_content_url, 10 );
+	stmt.save.bind( channel, 11 );
+	stmt.save.next();
 }
