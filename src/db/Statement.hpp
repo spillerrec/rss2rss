@@ -37,6 +37,10 @@ class Statement{
 		std::string text( unsigned column );
 		int integer( unsigned column );
 		double floating( unsigned column );
+		
+		void bind( std::string value, unsigned column );
+		void bind( int value, unsigned column );
+		void bind( double value, unsigned column );
 };
 
 #endif

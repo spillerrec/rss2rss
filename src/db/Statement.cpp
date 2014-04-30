@@ -24,7 +24,7 @@
 using namespace std;
 
 Statement::Statement( Database& db, const char* query ){
-	if( sqlite3_prepare_v2( db, "SELECT * FROM channel", -1, &stmt, NULL ) != SQLITE_OK )
+	if( sqlite3_prepare_v2( db, query, -1, &stmt, NULL ) != SQLITE_OK )
 		cout << "Prepare failed: " << sqlite3_errmsg( db ) << endl; //TODO: correct?
 		//TODO: throw exception
 }
@@ -45,6 +45,17 @@ int Statement::integer( unsigned column ){
 
 double Statement::floating( unsigned column ){
 	return sqlite3_column_double( stmt, column );
+}
+
+void Statement::bind( string value, unsigned column ){
+	sqlite3_bind_text( stmt, column, value.c_str(), value.size(), SQLITE_TRANSIENT );
+	//TODO: enable use of SQLITE_STATIC ?
+}
+void Statement::bind( int value, unsigned column ){
+	sqlite3_bind_int64( stmt, column, value );
+}
+void Statement::bind( double value, unsigned column ){
+	sqlite3_bind_double( stmt, column, value );
 }
 
 

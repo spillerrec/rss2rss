@@ -16,3 +16,32 @@
 
 #include "ChannelItem.hpp"
 
+void ChannelItem::load( Statement& stmt ){
+	title = stmt.text( 0 );
+	link = stmt.text( 1 );
+	description = stmt.text( 2 );
+	author = stmt.text( 3 );
+	category = stmt.text( 4 );
+	guid = stmt.text( 5 );
+	pubDate = stmt.text( 6 );
+	source = stmt.text( 7 );
+	media_thumb_url = stmt.text( 8 );
+	media_content_url = stmt.text( 9 );
+	channel = stmt.text( 10 );
+}
+
+void ChannelItem::save( Database &db ){
+	Statement stmt( db, "INSERT INTO item VALUES( ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11 )" );
+	stmt.bind( title, 1 );
+	stmt.bind( link, 2 );
+	stmt.bind( description, 3 );
+	stmt.bind( author, 4 );
+	stmt.bind( category, 5 );
+	stmt.bind( guid, 6 );
+	stmt.bind( pubDate, 7 );
+	stmt.bind( source, 8 );
+	stmt.bind( media_thumb_url, 9 );
+	stmt.bind( media_content_url, 10 );
+	stmt.bind( channel, 11 );
+	stmt.next();
+}

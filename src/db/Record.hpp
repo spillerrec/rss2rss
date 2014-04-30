@@ -18,6 +18,7 @@
 #define RECORD_HPP
 
 #include "Database.hpp"
+#include "Statement.hpp"
 
 class Record{
 	public:
