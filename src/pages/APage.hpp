@@ -27,6 +27,8 @@ class APage{
 		static header content_type( std::string mime="text/html" ){ return header( "Content-Type", mime ); }
 		virtual std::string serve( std::vector<std::string> args, std::vector<header> &headers ) const = 0;
 		virtual ~APage(){ }
+		
+		static std::string getFromUrl( std::string url,	std::vector<std::pair<std::string,std::string> > headers = std::vector<std::pair<std::string,std::string> >() );
 };
 
 #endif

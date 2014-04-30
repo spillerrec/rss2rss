@@ -17,6 +17,7 @@
 #include "PageHandler.hpp"
 
 #include "HomePage.hpp"
+#include "UpdatePage.hpp"
 #include "RssPage.hpp"
 
 using namespace std;
@@ -26,6 +27,7 @@ PageHandler::PageHandler()
 		,	page_404( new HomePage() )
 	{
 	add( "rss", new RssPage() );
+	add( "update", new UpdatePage() );
 }
 
 
