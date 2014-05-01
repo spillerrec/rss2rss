@@ -43,6 +43,10 @@ string Statement::text( unsigned column ){
 }
 
 int Statement::integer( unsigned column ){
+	return sqlite3_column_int( stmt, column );
+}
+
+int64_t Statement::integer64( unsigned column ){
 	return sqlite3_column_int64( stmt, column );
 }
 
@@ -55,6 +59,9 @@ void Statement::bind( string value, unsigned column ){
 	//TODO: enable use of SQLITE_STATIC ?
 }
 void Statement::bind( int value, unsigned column ){
+	sqlite3_bind_int( stmt, column, value );
+}
+void Statement::bind( int64_t value, unsigned column ){
 	sqlite3_bind_int64( stmt, column, value );
 }
 void Statement::bind( double value, unsigned column ){

@@ -14,7 +14,19 @@
 	along with rss2rss.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <Poco/Timestamp.h>
+#include <Poco/DateTimeParser.h>
+#include <Poco/DateTimeFormat.h>
+
 #include "ChannelItem.hpp"
+
+void ChannelItem::fromRssDate( std::string date ){
+	Poco::DateTime datetime;
+	int timezone;
+	
+	Poco::DateTimeParser::parse( Poco::DateTimeFormat::RFC1123_FORMAT, date, datetime, timezone );
+	pubDate = datetime.timestamp().epochTime();
+}
 
 void ChannelItem::load( Statement& stmt ){
 	title = stmt.text( 0 );
@@ -23,7 +35,7 @@ void ChannelItem::load( Statement& stmt ){
 	author = stmt.text( 3 );
 	category = stmt.text( 4 );
 	guid = stmt.text( 5 );
-	pubDate = stmt.text( 6 );
+	pubDate = stmt.integer( 6 );
 	source = stmt.text( 7 );
 	media_thumb_url = stmt.text( 8 );
 	media_content_url = stmt.text( 9 );

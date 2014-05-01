@@ -20,6 +20,7 @@
 #include "Database.hpp"
 
 #include <string>
+#include <cstdint>
 
 struct sqlite3;
 struct sqlite3_stmt;
@@ -37,10 +38,12 @@ class Statement{
 		
 		std::string text( unsigned column );
 		int integer( unsigned column );
+		int64_t integer64( unsigned column );
 		double floating( unsigned column );
 		
 		void bind( std::string value, unsigned column );
 		void bind( int value, unsigned column );
+		void bind( int64_t value, unsigned column );
 		void bind( double value, unsigned column );
 		
 };

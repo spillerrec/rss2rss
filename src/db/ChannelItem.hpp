@@ -20,6 +20,8 @@
 #include "Record.hpp"
 #include "../parsing/rss.hpp"
 
+#include <cstdint>
+
 class ChannelItem: public Record{
 	public:
 		std::string channel;
@@ -29,7 +31,7 @@ class ChannelItem: public Record{
 		std::string author;
 		std::string category;
 		std::string guid;
-		std::string pubDate;
+		int64_t pubDate;
 		std::string source;
 		std::string media_thumb_url;
 		std::string media_content_url;
@@ -44,12 +46,12 @@ class ChannelItem: public Record{
 			,	 author( item.author.value )
 			,	 category( item.category.value )
 			,	 guid( item.guid.value )
-			,	 pubDate( item.pubDate.value )
 			,	 source( item.source.url.value ) //TODO: name?
 			,	 media_thumb_url( item.media_thumbnail.url.value )
 			,	 media_content_url( item.media_content.url.value )
-			{ }
+			{ fromRssDate( item.pubDate.value ); }
 		
+		void fromRssDate( std::string date );
 		
 		struct ItemStatement{
 			Statement load;
