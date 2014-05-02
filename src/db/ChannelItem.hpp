@@ -28,6 +28,7 @@ class ChannelItem: public Record{
 		std::string title;
 		std::string link;
 		std::string description;
+		std::string content;
 		std::string author;
 		std::string category;
 		std::string guid;
@@ -43,6 +44,7 @@ class ChannelItem: public Record{
 			,	 title( item.title.value )
 			,	 link( item.link.value )
 			,	 description( item.description.value )
+			,	 content( item.content.value )
 			,	 author( item.author.value )
 			,	 category( item.category.value )
 			,	 guid( item.guid.value )

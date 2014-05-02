@@ -40,12 +40,13 @@ void ChannelItem::load( Statement& stmt ){
 	media_thumb_url = stmt.text( 8 );
 	media_content_url = stmt.text( 9 );
 	channel = stmt.text( 10 );
+	content = stmt.text( 11 );
 }
 
 ChannelItem::ItemStatement ChannelItem::saveAll( Database &db ){
 	return ItemStatement( db
 		,	"SELECT * FROM item WHERE guid = ?1"
-		,	"INSERT INTO item VALUES( ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11 )"
+		,	"INSERT INTO item VALUES( ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12 )"
 		);
 }
 
@@ -70,5 +71,6 @@ void ChannelItem::save( ChannelItem::ItemStatement &stmt ){
 	stmt.save.bind( media_thumb_url, 9 );
 	stmt.save.bind( media_content_url, 10 );
 	stmt.save.bind( channel, 11 );
+	stmt.save.bind( content, 12 );
 	stmt.save.next();
 }

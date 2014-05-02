@@ -14,37 +14,22 @@
 	along with BooruSurfer2.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "PageHandler.hpp"
+#ifndef FILE_PAGE_H
+#define FILE_PAGE_H
 
-#include "ChannelPage.hpp"
-#include "FilePage.hpp"
-#include "HomePage.hpp"
-#include "UpdatePage.hpp"
-#include "RssPage.hpp"
+#include "APage.hpp"
 
-using namespace std;
+#include <unordered_map>
 
-PageHandler::PageHandler()
-		:	page_root( new HomePage() )
-		,	page_404( new HomePage() )
-	{
-	add( "rss", new RssPage() );
-	add( "update", new UpdatePage() );
-	add( "files", new FilePage() );
-	add( "channel", new ChannelPage() );
-}
+class FilePage : public APage{
+	private:
+		std::unordered_map<std::string, std::string> mimes;
+		
+	public:
+		FilePage();
+		std::string serve( std::vector<std::string> args, std::vector<header> &headers ) const;
+		std::string get_mime( std::string ext ) const;
+};
 
-
-PageHandler::~PageHandler(){
-	
-}
-
-
-PageHandler::APage_ptr PageHandler::get( std::string page ){
-	auto got = pages.find( page );
-	if( got != pages.end() )
-		return got->second;
-	else
-		return page_404;
-}
+#endif
 
